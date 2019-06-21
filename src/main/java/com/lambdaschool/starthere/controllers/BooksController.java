@@ -29,7 +29,7 @@ public class BooksController {
     @Autowired
     private AuthorService authorsService;
 
-    @ApiOperation(value = "return a list of courses, supports pagination", response = Book.class, responseContainer = "List")
+    @ApiOperation(value = "return a list of books, supports pagination", response = Book.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "specifies the page that you want to access"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "specifies the page size"),
@@ -44,7 +44,7 @@ public class BooksController {
         if (myBooks == null) {
             throw new ResourceNotFoundException("no students found");
         } else{
-            logger.info("/courses accessed");
+            logger.info("/books accessed");
         }
 
         return new ResponseEntity<>(myBooks, HttpStatus.OK);
@@ -92,7 +92,7 @@ public class BooksController {
 
     @ApiOperation(value = "deletes a Book from the database", response = Book.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "Book succefully assigned to author", response = Book.class),
+            @ApiResponse(code = 404, message = "Book successfully assigned to author", response = Book.class),
             @ApiResponse(code = 500, message = "failed to find Author or Book", response = ErrorDetail.class)
     })
     @PostMapping("/data/author/{authorid}/book/{bookid}")
@@ -100,9 +100,11 @@ public class BooksController {
 
         if (authorsService.findAuthorById(authorid) == null) {
             throw new ResourceNotFoundException("could not find author with id of " + authorid);
-        } else{
+        } else if (bookService.findBookById(bookid) == null) {
+            throw new ResourceNotFoundException("could not find book with id of " + bookid);
+        }else{
             logger.info("/data/books/authors{id} endpoint accessed");
-            bookService.assignBooktoAuthor(authorid, bookid);
+            bookService.assignAuthor(authorid, bookid);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);

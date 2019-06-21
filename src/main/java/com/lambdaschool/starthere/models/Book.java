@@ -32,7 +32,7 @@ public class Book extends Auditable
     }
 
 
-    public Book(String isbn, int copy, String booktitle, List<Author> authors) {
+    public Book(String booktitle, String isbn, int copy, List<Author> authors) {
         this.isbn = isbn;
         this.copy = copy;
         this.booktitle = booktitle;

@@ -11,4 +11,5 @@ public interface AuthorService {
     List<Author> findAll();
 
     Author findAuthorById(long authorid);
+    void save(Author author);
 }

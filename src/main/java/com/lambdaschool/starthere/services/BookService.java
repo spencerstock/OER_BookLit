@@ -12,11 +12,11 @@ public interface BookService {
 
     Book updateBook(Book book, long id);
 
-    void assignAuthor(long bookid, long authorid);
+    void assignAuthor(long authorid, long bookid);
 
     void delete(long id);
 
+    void save(Book book);
     Book findBookById(long id);
 
-    void assignBooktoAuthor(long authorid, long bookid);
 }

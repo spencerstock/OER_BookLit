@@ -27,7 +27,7 @@ public class AuthorsController {
     @Autowired
     private AuthorService authorService;
 
-    @ApiOperation(value = "return a list of courses, supports pagination", response = Author.class, responseContainer = "List")
+    @ApiOperation(value = "return a list of authors, supports pagination", response = Author.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "specifies the page that you want to access"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "specifies the page size"),
@@ -40,9 +40,9 @@ public class AuthorsController {
         List<Author> myAuthors = authorService.findAll(pageable);
 
         if (myAuthors == null) {
-            throw new ResourceNotFoundException("no students found");
+            throw new ResourceNotFoundException("no authors found");
         } else{
-            logger.info("/courses accessed");
+            logger.info("/authors accessed");
         }
 
         return new ResponseEntity<>(myAuthors, HttpStatus.OK);
