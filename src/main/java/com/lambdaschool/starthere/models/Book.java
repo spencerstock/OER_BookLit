@@ -23,21 +23,28 @@ public class Book extends Auditable
     private String booktitle;
 
 
-    @OneToMany(mappedBy = "book",
-            cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("book")
-    private List<BookAuthors> bookAuthors = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "books")
+    @JsonIgnoreProperties("books")
+    private List<Author> authors = new ArrayList<>();
 
     public Book()
     {
     }
 
 
-    public Book(String isbn, int copy, String booktitle) {
+    public Book(String isbn, int copy, String booktitle, List<Author> authors) {
         this.isbn = isbn;
         this.copy = copy;
         this.booktitle = booktitle;
+        this.authors = authors;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public long getBookid() {

@@ -22,9 +22,9 @@ public class Author extends Auditable {
     private String firstname;
 
 
-    @OneToMany(mappedBy = "author",
-            cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("author")
-    private List<BookAuthors> bookAuthors = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "bookauthors", joinColumns = {@JoinColumn(name = "authorid")}, inverseJoinColumns = {@JoinColumn(name = "bookid")})
+    @JsonIgnoreProperties("authors")
+    private List<Book> books = new ArrayList<>();
 }
 
