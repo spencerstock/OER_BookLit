@@ -4,6 +4,7 @@ import com.lambdaschool.starthere.models.Book;
 import com.lambdaschool.starthere.repository.AuthorRepository;
 import com.lambdaschool.starthere.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -19,6 +20,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
+        List<Book> bookList = new ArrayList<>();
+        repo.findAll().iterator().forEachRemaining(bookList::add);
+        return bookList;
+    }
+
+    @Override
+    public List<Book> findAll(Pageable pageable) {
         List<Book> bookList = new ArrayList<>();
         repo.findAll().iterator().forEachRemaining(bookList::add);
         return bookList;
@@ -59,5 +67,15 @@ public class BookServiceImpl implements BookService {
             throw new EntityNotFoundException();
         }
 
+    }
+
+    @Override
+    public Book findBookById(long id) {
+        return repo.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public void assignBooktoAuthor(long authorid, long bookid) {
+        //TODO: Create method
     }
 }
