@@ -30,8 +30,8 @@ public class Author extends Auditable {
         this.firstname = firstname;
     }
 
-    @ManyToMany
-    @JoinTable(name = "bookauthors", joinColumns = {@JoinColumn(name = "authorid")}, inverseJoinColumns = {@JoinColumn(name = "bookid")})
+    @ManyToMany(mappedBy = "authors")
+    @JsonIgnoreProperties("authors")
     private List<Book> books = new ArrayList<>();
 
 

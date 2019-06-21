@@ -23,7 +23,7 @@ public class Book extends Auditable
     private String booktitle;
 
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany
     @JsonIgnoreProperties("books")
     private List<Author> authors = new ArrayList<>();
 

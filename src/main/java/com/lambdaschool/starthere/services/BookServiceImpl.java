@@ -54,8 +54,8 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public void assignAuthor(long bookid, long authorid) {
-        Book currentBook = repo.findById(bookid).orElseThrow(EntityNotFoundException::new);
-        currentBook.getAuthors().add(authorRepo.findById(authorid).orElseThrow(EntityNotFoundException::new));
+        Book book = repo.findById(bookid).orElseThrow(EntityNotFoundException::new);
+        book.getAuthors().add(authorRepo.findById(authorid).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional

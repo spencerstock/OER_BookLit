@@ -100,10 +100,8 @@ public class BooksController {
 
         if (authorsService.findAuthorById(authorid) == null) {
             throw new ResourceNotFoundException("could not find author with id of " + authorid);
-        } else if (bookService.findBookById(bookid) == null) {
-            throw new ResourceNotFoundException("could not find book with id of " + bookid);
         }else{
-            logger.info("/data/books/authors{id} endpoint accessed");
+            logger.info("/data/author/{authorid}/book/{bookid} endpoint accessed");
             bookService.assignAuthor(authorid, bookid);
         }
 
