@@ -17,17 +17,11 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository repo;
 
 
-    @Override
-    public List<Author> findAll() {
-        List<Author> authorList = new ArrayList<>();
-        repo.findAll().iterator().forEachRemaining(authorList::add);
-        return authorList;
-    }
 
     @Override
     public List<Author> findAll(Pageable pageable) {
         List<Author> authorList = new ArrayList<>();
-        repo.findAll().iterator().forEachRemaining(authorList::add);
+        repo.findAll(pageable).iterator().forEachRemaining(authorList::add);
         return authorList;
     }
 

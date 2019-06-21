@@ -21,17 +21,11 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private AuthorRepository authorRepo;
 
-    @Override
-    public List<Book> findAll() {
-        List<Book> bookList = new ArrayList<>();
-        repo.findAll().iterator().forEachRemaining(bookList::add);
-        return bookList;
-    }
 
     @Override
     public List<Book> findAll(Pageable pageable) {
         List<Book> bookList = new ArrayList<>();
-        repo.findAll().iterator().forEachRemaining(bookList::add);
+        repo.findAll(pageable).iterator().forEachRemaining(bookList::add);
         return bookList;
     }
 

@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface BookService {
     List<Book> findAll(Pageable pageable);
-    List<Book> findAll();
 
     Book updateBook(Book book, long id);
 
