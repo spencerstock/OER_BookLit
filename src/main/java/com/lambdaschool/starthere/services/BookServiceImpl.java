@@ -1,5 +1,6 @@
 package com.lambdaschool.starthere.services;
 
+import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.models.Book;
 import com.lambdaschool.starthere.repository.AuthorRepository;
 import com.lambdaschool.starthere.repository.BookRepository;
@@ -54,8 +55,8 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public void assignAuthor(long bookid, long authorid) {
-        Book book = repo.findById(bookid).orElseThrow(EntityNotFoundException::new);
-        book.getAuthors().add(authorRepo.findById(authorid).orElseThrow(EntityNotFoundException::new));
+        Book book = repo.findById(bookid).orElseThrow(ResourceNotFoundException::new);
+        book.getAuthors().add(authorRepo.findById(authorid).orElseThrow(ResourceNotFoundException::new));
     }
 
     @Transactional

@@ -102,7 +102,7 @@ public class BooksController {
             throw new ResourceNotFoundException("could not find author with id of " + authorid);
         }else{
             logger.info("/data/author/{authorid}/book/{bookid} endpoint accessed");
-            bookService.assignAuthor(authorid, bookid);
+            bookService.assignAuthor(bookid, authorid);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
