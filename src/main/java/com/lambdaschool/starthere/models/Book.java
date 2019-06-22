@@ -8,63 +8,46 @@ import java.util.List;
 
 @Entity
 @Table(name = "books")
-public class Book extends Auditable
-{
+public class Book extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookid;
 
-    @Column(unique = true)
-    private String isbn;
-    @Column
-    private int copy; //the year the book was copyrighted
 
     @Column(nullable = false)
     private String booktitle;
+    @Column
+    private String publisher;
+    @Column
+    private String url;
+    @Column
+    private String imageurl;
+    @Column
+    private String license;
+    @Column
+    private String author;
 
 
-    @ManyToMany
-    @JsonIgnoreProperties("books")
-    private List<Author> authors = new ArrayList<>();
+    @OneToMany
+    @JsonIgnoreProperties("book")
+    private List<Review> reviews = new ArrayList<>();
 
-    public Book()
-    {
+    public Book() {
     }
 
 
-    public Book(String booktitle, String isbn, int copy, List<Author> authors) {
-        this.isbn = isbn;
-        this.copy = copy;
+    public Book(String booktitle, String publisher, String url, String imageurl, String license, String author, List<Review> reviews) {
         this.booktitle = booktitle;
-        this.authors = authors;
-    }
-
-    public List<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+        this.publisher = publisher;
+        this.url = url;
+        this.imageurl = imageurl;
+        this.license = license;
+        this.author = author;
+        this.reviews = reviews;
     }
 
     public long getBookid() {
         return bookid;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public int getCopy() {
-        return copy;
-    }
-
-    public void setCopy(int copy) {
-        this.copy = copy;
     }
 
     public String getBooktitle() {
@@ -73,5 +56,53 @@ public class Book extends Auditable
 
     public void setBooktitle(String booktitle) {
         this.booktitle = booktitle;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 }

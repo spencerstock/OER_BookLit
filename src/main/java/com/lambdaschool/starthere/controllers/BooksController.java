@@ -4,7 +4,6 @@ package com.lambdaschool.starthere.controllers;
 
         import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
         import com.lambdaschool.starthere.models.Book;
-        import com.lambdaschool.starthere.services.AuthorService;
         import com.lambdaschool.starthere.services.BookService;
         import io.swagger.annotations.*;
         import org.springframework.data.web.PageableDefault;
@@ -26,8 +25,6 @@ public class BooksController {
 
     @Autowired
     private BookService bookService;
-    @Autowired
-    private AuthorService authorsService;
 
     @ApiOperation(value = "return a list of books, supports pagination", response = Book.class, responseContainer = "List")
     @ApiImplicitParams({
@@ -65,7 +62,7 @@ public class BooksController {
         if (bookService.updateBook(updateBook, id) == null) {
             throw new ResourceNotFoundException("could not update book");
         } else{
-            logger.info("/data/books/{id} endpoint accessed");
+            logger.info("/data/books/{id} UPDATE endpoint accessed");
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -83,28 +80,12 @@ public class BooksController {
         if (bookService.findBookById(id) == null) {
             throw new ResourceNotFoundException("could not find book with id of " + id);
         } else{
-            logger.info("/data/books/{id} endpoint accessed");
+            logger.info("/data/books/{id} DELETE endpoint accessed");
             bookService.delete(id);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiOperation(value = "deletes a Book from the database", response = Book.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "Book successfully assigned to author", response = Book.class),
-            @ApiResponse(code = 500, message = "failed to find Author or Book", response = ErrorDetail.class)
-    })
-    @PostMapping("/data/author/{authorid}/book/{bookid}")
-    public ResponseEntity<?> assignBooktoAuthor(@PathVariable long authorid, @PathVariable long bookid) {
 
-        if (authorsService.findAuthorById(authorid) == null) {
-            throw new ResourceNotFoundException("could not find author with id of " + authorid);
-        }else{
-            logger.info("/data/author/{authorid}/book/{bookid} endpoint accessed");
-            bookService.assignAuthor(bookid, authorid);
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

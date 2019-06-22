@@ -2,7 +2,7 @@ package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.models.Book;
-import com.lambdaschool.starthere.repository.AuthorRepository;
+import com.lambdaschool.starthere.models.Review;
 import com.lambdaschool.starthere.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +19,6 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository repo;
 
-    @Autowired
-    private AuthorRepository authorRepo;
 
 
     @Override
@@ -36,28 +34,12 @@ public class BookServiceImpl implements BookService {
         Book currentBook = repo.findById(id).orElseThrow(EntityNotFoundException::new);
         if(book.getBooktitle() != null){
             currentBook.setBooktitle(book.getBooktitle());
-        }
-        if (book.getAuthors() != null && book.getAuthors().size() > 0){
-            currentBook.setAuthors(book.getAuthors());
-        }
-        if(book.getCopy() != -1){
-            currentBook.setCopy(book.getCopy());
-        }
-        if (book.getIsbn() != null){
-            currentBook.setIsbn(book.getIsbn());
-        }
-
+        }//TODO: Add the rest of the fields to be updated
         repo.save(currentBook);
         return currentBook;
     }
 
 
-    @Transactional
-    @Override
-    public void assignAuthor(long bookid, long authorid) {
-        Book book = repo.findById(bookid).orElseThrow(ResourceNotFoundException::new);
-        book.getAuthors().add(authorRepo.findById(authorid).orElseThrow(ResourceNotFoundException::new));
-    }
 
     @Transactional
     @Override
@@ -78,6 +60,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findBookById(long id) {
         return repo.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public boolean addReview(Review review, long id) {
+        Book currentBook = repo.findById(id).orElseThrow(EntityNotFoundException::new);
+        return currentBook.getReviews().add(review);
     }
 
 }
